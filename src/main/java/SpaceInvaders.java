@@ -17,6 +17,7 @@ public class SpaceInvaders extends Application {
             @Override
             public void handle(long now) {
                 Player.handlePlayerAnimation(GameScene.root);
+                PlayerBullet.handlePlayerBulletAnimation(GameScene.root);
                 Enemy.handleEnemyAnimation(GameScene.root);
                 EnemyBullet.handleEnemyBulletAnimation(GameScene.root);
                 if (stopGame) {

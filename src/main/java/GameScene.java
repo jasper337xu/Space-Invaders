@@ -14,12 +14,13 @@ public class GameScene {
     public static final int NUM_COL = 10, NUM_ROW = 5;
     public static final float SCREEN_WIDTH = 800;
     public static final float SCREEN_HEIGHT = 600;
+    public static final int PLAYER_INDEX = 51;
     enum STATE {STOP, RUN}
     static STATE gameState = STATE.RUN;
     static Group root = null;
     static Group enemyBulletGroup = null;
-
     public static List<Enemy.ENEMY_TYPE> firedEnemies = new ArrayList<>();
+    static Group playerBulletGroup = null;
 
     public static Scene createGameScene() {
         root = new Group();
@@ -28,6 +29,8 @@ public class GameScene {
         root.getChildren().add(enemyBulletGroup);
         Enemy.init();
         addPlayerToGroup(root);
+        playerBulletGroup = new Group();
+        root.getChildren().add(playerBulletGroup);
 
         Scene scene = new Scene(root, Color.BLACK);
         setupEventHandler(scene);
@@ -45,7 +48,7 @@ public class GameScene {
                     Player.handlePlayerMoveRight();
                 }
                 else if (e.getCode() == KeyCode.SPACE) {
-                    Player.handlePlayerFire();
+                    addPlayerBulletToGroup();
                 }
             }
         };
@@ -54,7 +57,9 @@ public class GameScene {
         EventHandler<KeyEvent> sceneHandler2 = new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent e) {
-                Player.handleStopMoving();
+                if (e.getCode() != KeyCode.SPACE) {
+                    Player.handleStopMoving();
+                }
             }
         };
         scene.addEventHandler(KeyEvent.KEY_RELEASED, sceneHandler2);
@@ -133,6 +138,7 @@ public class GameScene {
         enemyBulletGroup.getChildren().add(bulletImageView);
     }
 
+    //need to store which enemy fires the bullet cuz the speed of bullets fired by different enemies is different
     public static List<Enemy.ENEMY_TYPE> getFiredEnemies() {
         return firedEnemies;
     }
@@ -145,5 +151,17 @@ public class GameScene {
         playerImageView.setLayoutX(SCREEN_WIDTH / 2);
         playerImageView.setLayoutY(SCREEN_HEIGHT - 50);
         root.getChildren().add(playerImageView);
+    }
+
+    public static void addPlayerBulletToGroup() {
+        Image bulletImage = new Image("player_bullet.png", 6, 16, true, true);
+        ImageView bulletImageView = new ImageView(bulletImage);
+        bulletImageView.setFitWidth(6);
+        bulletImageView.setFitHeight(16);
+        double layoutX = root.getChildren().get(PLAYER_INDEX).getLayoutX() + 40 / 2;
+        double layoutY = root.getChildren().get(PLAYER_INDEX).getLayoutY();
+        bulletImageView.setLayoutX(layoutX);
+        bulletImageView.setLayoutY(layoutY);
+        playerBulletGroup.getChildren().add(bulletImageView);
     }
 }

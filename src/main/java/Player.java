@@ -19,10 +19,6 @@ public class Player {
         moveLeft = false;
     }
 
-    public static void handlePlayerFire() {
-
-    }
-
     public static void handleStopMoving() {
         moveLeft = false;
         moveRight = false;
