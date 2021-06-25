@@ -14,6 +14,9 @@ public class EnemyBullet {
 
     public static void fireBullet() {
         Set<Integer> remainingEnemies = Enemy.getRemainingEnemies();
+        if (remainingEnemies.isEmpty()) {
+            return;
+        }
         // convert HashSet to an array
         Integer[] array = remainingEnemies.toArray(new Integer[remainingEnemies.size()]);
         Random rn = new Random();

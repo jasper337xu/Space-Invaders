@@ -27,7 +27,7 @@ public class Enemy {
         boolean stopGame = false;
         for (int i = 0; i < INIT_NUM_ENEMIES; i++) {
             Node n = root.getChildren().get(i);
-            if (n != null) {
+            if (remainingEnemies.contains(i)) {
                 n.setLayoutX(n.getLayoutX() + enemySpeed);
                 if (n.getLayoutX() < 0 || n.getLayoutX() > SCREEN_WIDTH - ENEMY_WIDTH) {
                     changeDirection = true;
@@ -39,7 +39,7 @@ public class Enemy {
             // descend one row and reverse direction
             for (int i = 0; i < INIT_NUM_ENEMIES; i++) {
                 Node n = root.getChildren().get(i);
-                if (n != null) {
+                if (remainingEnemies.contains(i)) {
                     n.setLayoutY(n.getLayoutY() + ENEMY_VERTICAL_SPEED);
                     if (n.getLayoutY() > SCREEN_HEIGHT - 39) {
                         stopGame = true;
