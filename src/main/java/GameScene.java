@@ -1,4 +1,6 @@
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -7,8 +9,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +27,7 @@ public class GameScene {
     public static final int PLAYER_INDEX = 51;
     public static final int SCORE_LABEL_INDEX = 53;
     public static final int LIVES_LABEL_INDEX = 54;
+    public static final int VBOX_INDEX = 56;
     enum STATE {STOP, RUN}
     static STATE gameState = STATE.RUN;
     static Group root = null;
@@ -39,10 +47,32 @@ public class GameScene {
         addScoreLabelToGroup(root);
         addLivesLabel(root);
         addLevelLabel(root);
+        addGameOverVBox(root);
 
         Scene scene = new Scene(root, Color.BLACK);
         setupEventHandler(scene);
         return scene;
+    }
+
+    public static void addGameOverVBox(Group root) {
+        Label label = new Label("GAME OVER!");
+        label.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        Label scoreLabel = new Label("Final Score: 0");
+        Label enterLabel = new Label("Enter - Start New Game");
+        Label instructionLabel = new Label("I - Back to Instructions");
+        Label quitLabel = new Label("Q - Quit Game");
+        Label levelLabel = new Label("1 or 2 or 3 - Start New Game at a specific level");
+
+        VBox gameOver = new VBox(label, scoreLabel, enterLabel, instructionLabel, quitLabel, levelLabel);
+        gameOver.setBackground(new Background(new BackgroundFill(Color.rgb(250, 250, 250),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        gameOver.setPrefWidth(400);
+        gameOver.setPrefHeight(250);
+        gameOver.setAlignment(Pos.CENTER);
+        gameOver.setLayoutX(200);
+        gameOver.setLayoutY(150);
+        gameOver.setVisible(false);
+        root.getChildren().add(gameOver);
     }
 
     public static void setupEventHandler(Scene scene) {
@@ -58,6 +88,9 @@ public class GameScene {
                 else if (e.getCode() == KeyCode.SPACE) {
                     addPlayerBulletToGroup();
                 }
+//                else if (e.getCode() == KeyCode.Q) {
+//                    SpaceInvaders.stopGame = true;
+//                }
             }
         };
         scene.addEventHandler(KeyEvent.KEY_PRESSED, sceneHandler);
@@ -74,8 +107,17 @@ public class GameScene {
 
     }
 
-    public static void stopGame() {
+    public static void stopGame(boolean gameSuccess) {
         gameState = STATE.STOP;
+        if (!gameSuccess) {
+            VBox gameOver = (VBox) root.getChildren().get(VBOX_INDEX);
+            Label scoreLabel = (Label) gameOver.getChildren().get(1);
+            scoreLabel.setText("Final Score: " + Player.getScore());
+            gameOver.setVisible(true);
+        }
+        else {
+            //TODO: Show a message that player has won, and display score
+        }
         SpaceInvaders.stopGame = true;
     }
 

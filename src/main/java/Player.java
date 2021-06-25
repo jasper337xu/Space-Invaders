@@ -1,5 +1,6 @@
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Player {
@@ -7,6 +8,7 @@ public class Player {
     public static final double PLAYER_SPEED = 3.0;
     public static final float PLAYER_WIDTH = 40;
     public static final float SCREEN_WIDTH = 800;
+    public static final float SCREEN_HEIGHT = 600;
     public static final int NUM_COL = 10;
     static boolean moveLeft = false;
     static boolean moveRight = false;
@@ -48,7 +50,14 @@ public class Player {
         Node player = root.getChildren().get(PLAYER_INDEX);
         ImageView playerImageView = (ImageView) player;
         playerImageView.setImage(null);
-        //TODO: get a new ship, descrease lives etc.
+        //create a new player, and put into group to replace the previous one
+        Image newPlayerImage = new Image("player.png", 40, 25, true, true);
+        ImageView newPlayerImageView = new ImageView(newPlayerImage);
+        newPlayerImageView.setFitWidth(40);
+        newPlayerImageView.setFitHeight(25);
+        newPlayerImageView.setLayoutX(SCREEN_WIDTH / 2);
+        newPlayerImageView.setLayoutY(SCREEN_HEIGHT - 50);
+        root.getChildren().set(PLAYER_INDEX, newPlayerImageView);
     }
 
     public static void updateScore(int enemyIndex) {
@@ -69,7 +78,7 @@ public class Player {
     public static void updateLives() {
         lives--;
         if (lives == 0) {
-            //TODO: Game Over Scene
+            GameScene.stopGame(false);
         }
     }
 

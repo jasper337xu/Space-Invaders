@@ -43,12 +43,13 @@ public class Enemy {
                 if (remainingEnemies.contains(i)) {
                     n.setLayoutY(n.getLayoutY() + ENEMY_VERTICAL_SPEED);
                     if (n.getLayoutY() > SCREEN_HEIGHT - 39) {
+                        //alien contacts the player
                         stopGame = true;
                     }
                 }
             }
             if (stopGame) {
-                GameScene.stopGame();
+                GameScene.stopGame(false);
             }
             enemySpeed *= -1.0f;
         }
@@ -62,6 +63,9 @@ public class Enemy {
         ImageView enemyImageView = (ImageView) enemy;
         enemyImageView.setImage(null);
         remainingEnemies.remove(enemyIndex);
+        if (remainingEnemies.size() == 0) {
+            //TODO: Next level or Game Success
+        }
         enemiesSpeedUp();
     }
 
