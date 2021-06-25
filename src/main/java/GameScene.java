@@ -40,7 +40,6 @@ public class GameScene {
         addEnemiesToGroup(root);
         enemyBulletGroup = new Group();
         root.getChildren().add(enemyBulletGroup);
-        Enemy.init();
         addPlayerToGroup(root);
         playerBulletGroup = new Group();
         root.getChildren().add(playerBulletGroup);
@@ -49,6 +48,7 @@ public class GameScene {
         addLevelLabel(root);
         addGameOverVBox(root);
 
+        startNewGame();
         Scene scene = new Scene(root, Color.BLACK);
         setupEventHandler(scene);
         return scene;
@@ -88,9 +88,6 @@ public class GameScene {
                 else if (e.getCode() == KeyCode.SPACE) {
                     addPlayerBulletToGroup();
                 }
-//                else if (e.getCode() == KeyCode.Q) {
-//                    SpaceInvaders.stopGame = true;
-//                }
             }
         };
         scene.addEventHandler(KeyEvent.KEY_PRESSED, sceneHandler);
@@ -216,7 +213,7 @@ public class GameScene {
     }
 
     public static void addScoreLabelToGroup(Group root) {
-        Label scoreLabel = new Label("Score: " + Player.getScore());
+        Label scoreLabel = new Label("Score: 0");
         scoreLabel.setFont(new Font("Arial", 25));
         scoreLabel.setTextFill(Color.WHITE);
         scoreLabel.setLayoutX(50);
@@ -231,7 +228,7 @@ public class GameScene {
     }
 
     public static void addLivesLabel(Group root) {
-        Label livesLabel = new Label("Lives: " + Player.getLives());
+        Label livesLabel = new Label("Lives: 3");
         livesLabel.setFont(new Font("Arial", 25));
         livesLabel.setTextFill(Color.WHITE);
         livesLabel.setLayoutX(350);
@@ -252,5 +249,10 @@ public class GameScene {
         levelLabel.setLayoutX(650);
         levelLabel.setLayoutY(15);
         root.getChildren().add(levelLabel);
+    }
+
+    public static void startNewGame() {
+        Player.startNewGame();
+        Enemy.startNewGame();
     }
 }

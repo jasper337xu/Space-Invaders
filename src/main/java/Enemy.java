@@ -16,12 +16,12 @@ public class Enemy {
 
     enum ENEMY_TYPE {ENEMY1, ENEMY2, ENEMY3};
 
-    public static void init() {
-        // init remainingEnemies
-        for (int i = 0; i < 50; i++) {
-            remainingEnemies.add(i);
-        }
-    }
+//    public static void init() {
+//        // init remainingEnemies
+//        for (int i = 0; i < 50; i++) {
+//            remainingEnemies.add(i);
+//        }
+//    }
 
     public static void handleEnemyAnimation(Group root) {
         boolean changeDirection = false;
@@ -75,6 +75,14 @@ public class Enemy {
         }
         else {
             enemySpeed -= 0.1;
+        }
+    }
+
+    public static void startNewGame() {
+        enemySpeed = 0.5;
+        remainingEnemies = new HashSet<>();
+        for (int i = 0; i < 50; i++) {
+            remainingEnemies.add(i);
         }
     }
 }

@@ -85,4 +85,11 @@ public class Player {
     public static int getLives() {
         return lives;
     }
+
+    public static void startNewGame() {
+        moveLeft = false;
+        moveRight = false;
+        score = 0;
+        lives = 3;
+    }
 }
