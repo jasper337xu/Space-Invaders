@@ -24,6 +24,15 @@ public class SpaceInvaders extends Application {
             else if (event.getCode() == KeyCode.Q) {
                 exit(stage);
             }
+            else if (event.getCode() == KeyCode.DIGIT1) {
+                setGameSceneByLevel(stage,1);
+            }
+            else if (event.getCode() == KeyCode.DIGIT2) {
+                setGameSceneByLevel(stage,2);
+            }
+            else if (event.getCode() == KeyCode.DIGIT3) {
+                setGameSceneByLevel(stage,3);
+            }
         });
 
         timer = new AnimationTimer() {
@@ -82,6 +91,15 @@ public class SpaceInvaders extends Application {
             else if (event.getCode() == KeyCode.Q) {
                 exit(stage);
             }
+            else if (event.getCode() == KeyCode.DIGIT1) {
+                setGameSceneByLevel(stage,1);
+            }
+            else if (event.getCode() == KeyCode.DIGIT2) {
+                setGameSceneByLevel(stage,2);
+            }
+            else if (event.getCode() == KeyCode.DIGIT3) {
+                setGameSceneByLevel(stage,3);
+            }
         });
     }
 
@@ -89,6 +107,11 @@ public class SpaceInvaders extends Application {
         stage.close();
         System.out.println("Quitting");
         System.exit(0);
+    }
+
+    void setGameSceneByLevel(Stage stage, int level) {
+        setScene(stage, SCENES.GAME_SCENE);
+        GameSettings.setGameLevel(level);
     }
 
 }

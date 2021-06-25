@@ -27,6 +27,7 @@ public class GameScene {
     public static final int PLAYER_INDEX = 51;
     public static final int SCORE_LABEL_INDEX = 53;
     public static final int LIVES_LABEL_INDEX = 54;
+    public static final int LEVEL_LABEL_INDEX = 55;
     public static final int VBOX_INDEX = 56;
     enum STATE {STOP, RUN}
     static STATE gameState = STATE.RUN;
@@ -251,8 +252,14 @@ public class GameScene {
         root.getChildren().add(levelLabel);
     }
 
+    public static void updateLevelLabel() {
+        Node levelNode = root.getChildren().get(LEVEL_LABEL_INDEX);
+        Label levelLabel = (Label) levelNode;
+        levelLabel.setText("Level: " + GameSettings.getGameLevel());
+    }
+
     public static void startNewGame() {
-        Player.startNewGame();
-        Enemy.startNewGame();
+        Player.startNewGame(1);
+        Enemy.startNewGame(1);
     }
 }

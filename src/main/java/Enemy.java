@@ -78,8 +78,14 @@ public class Enemy {
         }
     }
 
-    public static void startNewGame() {
-        enemySpeed = 0.5;
+    public static void startNewGame(int level) {
+        if (level == 1) {
+            enemySpeed = 0.5;
+        } else if (level == 2) {
+            enemySpeed = 1.0;
+        } else {
+            enemySpeed = 1.5;
+        }
         remainingEnemies = new HashSet<>();
         for (int i = 0; i < 50; i++) {
             remainingEnemies.add(i);
