@@ -57,14 +57,14 @@ public class Enemy {
         enemyImageView.setImage(null);
         remainingEnemies.remove(enemyIndex);
         if (remainingEnemies.size() == 0) {
-            //TODO: Next level or Game Success
+            // launch next level or game success
             int currentLevel = GameSettings.getGameLevel();
             if (currentLevel <= 2) {
                 GameSettings.launchNextLevel();
             }
-//            else {
-//                GameScene.stopGame(true);
-//            }
+            else {
+                GameScene.stopGame(true);
+            }
             return;
         }
         enemiesSpeedUp();

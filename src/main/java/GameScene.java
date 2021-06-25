@@ -28,7 +28,8 @@ public class GameScene {
     public static final int SCORE_LABEL_INDEX = 53;
     public static final int LIVES_LABEL_INDEX = 54;
     public static final int LEVEL_LABEL_INDEX = 55;
-    public static final int VBOX_INDEX = 56;
+    public static final int GAMEOVER_VBOX_INDEX = 56;
+    public static final int PLAYER_WON_VBOX_INDEX = 57;
     enum STATE {STOP, RUN}
     static STATE gameState = STATE.RUN;
     static Group root = null;
@@ -49,32 +50,12 @@ public class GameScene {
         addLivesLabel(root);
         addLevelLabel(root);
         addGameOverVBox(root);
+        addPlayerWonVBox(root);
 
         startNewGame();
         Scene scene = new Scene(root, Color.BLACK);
         setupEventHandler(scene);
         return scene;
-    }
-
-    public static void addGameOverVBox(Group root) {
-        Label label = new Label("GAME OVER!");
-        label.setFont(Font.font("Arial", FontWeight.BOLD, 30));
-        Label scoreLabel = new Label("Final Score: 0");
-        Label enterLabel = new Label("Enter - Start New Game");
-        Label instructionLabel = new Label("I - Back to Instructions");
-        Label quitLabel = new Label("Q - Quit Game");
-        Label levelLabel = new Label("1 or 2 or 3 - Start New Game at a specific level");
-
-        VBox gameOver = new VBox(label, scoreLabel, enterLabel, instructionLabel, quitLabel, levelLabel);
-        gameOver.setBackground(new Background(new BackgroundFill(Color.rgb(250, 250, 250),
-                CornerRadii.EMPTY, Insets.EMPTY)));
-        gameOver.setPrefWidth(400);
-        gameOver.setPrefHeight(250);
-        gameOver.setAlignment(Pos.CENTER);
-        gameOver.setLayoutX(200);
-        gameOver.setLayoutY(150);
-        gameOver.setVisible(false);
-        root.getChildren().add(gameOver);
     }
 
     public static void setupEventHandler(Scene scene) {
@@ -109,13 +90,16 @@ public class GameScene {
     public static void stopGame(boolean gameSuccess) {
         gameState = STATE.STOP;
         if (!gameSuccess) {
-            VBox gameOver = (VBox) root.getChildren().get(VBOX_INDEX);
+            VBox gameOver = (VBox) root.getChildren().get(GAMEOVER_VBOX_INDEX);
             Label scoreLabel = (Label) gameOver.getChildren().get(1);
             scoreLabel.setText("Final Score: " + Player.getScore());
             gameOver.setVisible(true);
         }
         else {
-            //TODO: Show a message that player has won, and display score
+            VBox playerWon = (VBox) root.getChildren().get(PLAYER_WON_VBOX_INDEX);
+            Label scoreLabel = (Label) playerWon.getChildren().get(1);
+            scoreLabel.setText("Final Score: " + Player.getScore());
+            playerWon.setVisible(true);
         }
         SpaceInvaders.stopGame = true;
     }
@@ -262,6 +246,48 @@ public class GameScene {
         Node levelNode = root.getChildren().get(LEVEL_LABEL_INDEX);
         Label levelLabel = (Label) levelNode;
         levelLabel.setText("Level: " + GameSettings.getGameLevel());
+    }
+
+    public static void addGameOverVBox(Group root) {
+        Label label = new Label("GAME OVER!");
+        label.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        Label scoreLabel = new Label("Final Score: 0");
+        Label enterLabel = new Label("Enter - Start New Game");
+        Label instructionLabel = new Label("I - Back to Instructions");
+        Label quitLabel = new Label("Q - Quit Game");
+        Label levelLabel = new Label("1 or 2 or 3 - Start New Game at a specific level");
+
+        VBox gameOver = new VBox(label, scoreLabel, enterLabel, instructionLabel, quitLabel, levelLabel);
+        gameOver.setBackground(new Background(new BackgroundFill(Color.rgb(250, 250, 250),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        gameOver.setPrefWidth(400);
+        gameOver.setPrefHeight(250);
+        gameOver.setAlignment(Pos.CENTER);
+        gameOver.setLayoutX(200);
+        gameOver.setLayoutY(150);
+        gameOver.setVisible(false);
+        root.getChildren().add(gameOver);
+    }
+
+    public static void addPlayerWonVBox(Group root) {
+        Label label = new Label("YOU WON!");
+        label.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        Label scoreLabel = new Label("Final Score: 2700");
+        Label enterLabel = new Label("Enter - Start New Game");
+        Label instructionLabel = new Label("I - Back to Instructions");
+        Label quitLabel = new Label("Q - Quit Game");
+        Label levelLabel = new Label("1 or 2 or 3 - Start New Game at a specific level");
+
+        VBox playerWon = new VBox(label, scoreLabel, enterLabel, instructionLabel, quitLabel, levelLabel);
+        playerWon.setBackground(new Background(new BackgroundFill(Color.rgb(250, 250, 250),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        playerWon.setPrefWidth(400);
+        playerWon.setPrefHeight(250);
+        playerWon.setAlignment(Pos.CENTER);
+        playerWon.setLayoutX(200);
+        playerWon.setLayoutY(150);
+        playerWon.setVisible(false);
+        root.getChildren().add(playerWon);
     }
 
     public static void startNewGame() {
