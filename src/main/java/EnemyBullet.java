@@ -46,9 +46,12 @@ public class EnemyBullet {
             Node player = root.getChildren().get(PLAYER_INDEX);
             if ((n.getLayoutX() >= player.getLayoutX() && n.getLayoutX() < player.getLayoutX() + PLAYER_WIDTH)
                     && (n.getLayoutY() >= player.getLayoutY() - 25)) {
+                //alien bullet strikes the player
                 Player.playerDestroyed(root);
                 firedEnemyBullets.remove(i);
                 firedEnemies.remove(i);
+                Player.updateLives();
+                GameScene.updateLivesLabel();
             }
 
             if (n.getLayoutY() > SCREEN_HEIGHT) {

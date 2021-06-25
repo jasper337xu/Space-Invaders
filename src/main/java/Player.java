@@ -7,8 +7,11 @@ public class Player {
     public static final double PLAYER_SPEED = 3.0;
     public static final float PLAYER_WIDTH = 40;
     public static final float SCREEN_WIDTH = 800;
+    public static final int NUM_COL = 10;
     static boolean moveLeft = false;
     static boolean moveRight = false;
+    public static int score = 0;
+    public static int lives = 3;
 
     public static void handlePlayerMoveLeft() {
         moveLeft = true;
@@ -46,5 +49,31 @@ public class Player {
         ImageView playerImageView = (ImageView) player;
         playerImageView.setImage(null);
         //TODO: get a new ship, descrease lives etc.
+    }
+
+    public static void updateScore(int enemyIndex) {
+        int row = enemyIndex / NUM_COL;
+        if (row == 0) {
+            score += 30;
+        } else if (row == 1 || row == 2) {
+            score += 20;
+        } else {
+            score += 10;
+        }
+    }
+
+    public static int getScore() {
+        return score;
+    }
+
+    public static void updateLives() {
+        lives--;
+        if (lives == 0) {
+            //TODO: Game Over Scene
+        }
+    }
+
+    public static int getLives() {
+        return lives;
     }
 }

@@ -1,11 +1,14 @@
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,8 @@ public class GameScene {
     public static final float SCREEN_WIDTH = 800;
     public static final float SCREEN_HEIGHT = 600;
     public static final int PLAYER_INDEX = 51;
+    public static final int SCORE_LABEL_INDEX = 53;
+    public static final int LIVES_LABEL_INDEX = 54;
     enum STATE {STOP, RUN}
     static STATE gameState = STATE.RUN;
     static Group root = null;
@@ -31,6 +36,9 @@ public class GameScene {
         addPlayerToGroup(root);
         playerBulletGroup = new Group();
         root.getChildren().add(playerBulletGroup);
+        addScoreLabelToGroup(root);
+        addLivesLabel(root);
+        addLevelLabel(root);
 
         Scene scene = new Scene(root, Color.BLACK);
         setupEventHandler(scene);
@@ -163,5 +171,44 @@ public class GameScene {
         bulletImageView.setLayoutX(layoutX);
         bulletImageView.setLayoutY(layoutY);
         playerBulletGroup.getChildren().add(bulletImageView);
+    }
+
+    public static void addScoreLabelToGroup(Group root) {
+        Label scoreLabel = new Label("Score: " + Player.getScore());
+        scoreLabel.setFont(new Font("Arial", 25));
+        scoreLabel.setTextFill(Color.WHITE);
+        scoreLabel.setLayoutX(50);
+        scoreLabel.setLayoutY(15);
+        root.getChildren().add(scoreLabel);
+    }
+
+    public static void updateScoreLabel() {
+        Node scoreNode = root.getChildren().get(SCORE_LABEL_INDEX);
+        Label scoreLabel = (Label) scoreNode;
+        scoreLabel.setText("Score: " + Player.getScore());
+    }
+
+    public static void addLivesLabel(Group root) {
+        Label livesLabel = new Label("Lives: " + Player.getLives());
+        livesLabel.setFont(new Font("Arial", 25));
+        livesLabel.setTextFill(Color.WHITE);
+        livesLabel.setLayoutX(350);
+        livesLabel.setLayoutY(15);
+        root.getChildren().add(livesLabel);
+    }
+
+    public static void updateLivesLabel() {
+        Node livesNode = root.getChildren().get(LIVES_LABEL_INDEX);
+        Label livesLabel = (Label) livesNode;
+        livesLabel.setText("Lives: " + Player.getLives());
+    }
+
+    public static void addLevelLabel(Group root) {
+        Label levelLabel = new Label("Level: 1");
+        levelLabel.setFont(new Font("Arial", 25));
+        levelLabel.setTextFill(Color.WHITE);
+        levelLabel.setLayoutX(650);
+        levelLabel.setLayoutY(15);
+        root.getChildren().add(levelLabel);
     }
 }

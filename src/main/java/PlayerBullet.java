@@ -1,6 +1,5 @@
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
 
 import java.util.List;
 import java.util.Set;
@@ -40,6 +39,8 @@ public class PlayerBullet {
                     && (playerBullet.getLayoutY() <= enemy.getLayoutY() + ENEMY_HEIGHT)) {
                 //player bullet strikes an alien
                 Enemy.enemyDestroyed(enemy, i);
+                Player.updateScore(i);
+                GameScene.updateScoreLabel();
                 return true;
             }
         }
