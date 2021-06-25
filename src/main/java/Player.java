@@ -1,5 +1,6 @@
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 
 public class Player {
     public static final int PLAYER_INDEX = 51;
@@ -38,5 +39,12 @@ public class Player {
                 player.setLayoutX(SCREEN_WIDTH - PLAYER_WIDTH);
             }
         }
+    }
+
+    public static void playerDestroyed(Group root) {
+        Node player = root.getChildren().get(PLAYER_INDEX);
+        ImageView playerImageView = (ImageView) player;
+        playerImageView.setImage(null);
+        //TODO: get a new ship, descrease lives etc.
     }
 }

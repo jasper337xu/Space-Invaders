@@ -38,9 +38,8 @@ public class PlayerBullet {
             Node enemy = root.getChildren().get(i);
             if ((playerBullet.getLayoutX() >= enemy.getLayoutX() && playerBullet.getLayoutX() < enemy.getLayoutX() + ENEMY_WIDTH)
                     && (playerBullet.getLayoutY() <= enemy.getLayoutY() + ENEMY_HEIGHT)) {
-                ImageView enemyImageView = (ImageView) enemy;
-                enemyImageView.setImage(null);
-                remainingEnemies.remove(i);
+                //player bullet strikes an alien
+                Enemy.enemyDestroyed(enemy, i);
                 return true;
             }
         }

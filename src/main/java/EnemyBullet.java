@@ -7,10 +7,12 @@ import java.util.Set;
 
 public class EnemyBullet {
     public static final int EBGROUP_INDEX = 50;
+    public static final int PLAYER_INDEX = 51;
     public static final double ENEMY1_BULLET_SPEED = 4.0;
     public static final double ENEMY2_BULLET_SPEED = 5.0;
     public static final double ENEMY3_BULLET_SPEED = 6.0;
     public static final float SCREEN_HEIGHT = 600;
+    public static final float PLAYER_WIDTH = 40;
 
     public static void fireBullet() {
         Set<Integer> remainingEnemies = Enemy.getRemainingEnemies();
@@ -39,6 +41,14 @@ public class EnemyBullet {
             }
             else if (firedEnemies.get(i) == Enemy.ENEMY_TYPE.ENEMY3) {
                 n.setLayoutY(n.getLayoutY() + ENEMY3_BULLET_SPEED);
+            }
+
+            Node player = root.getChildren().get(PLAYER_INDEX);
+            if ((n.getLayoutX() >= player.getLayoutX() && n.getLayoutX() < player.getLayoutX() + PLAYER_WIDTH)
+                    && (n.getLayoutY() >= player.getLayoutY() - 25)) {
+                Player.playerDestroyed(root);
+                firedEnemyBullets.remove(i);
+                firedEnemies.remove(i);
             }
 
             if (n.getLayoutY() > SCREEN_HEIGHT) {

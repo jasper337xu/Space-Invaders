@@ -1,5 +1,6 @@
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -55,5 +56,21 @@ public class Enemy {
 
     public static Set<Integer> getRemainingEnemies() {
         return remainingEnemies;
+    }
+
+    public static void enemyDestroyed(Node enemy, int enemyIndex) {
+        ImageView enemyImageView = (ImageView) enemy;
+        enemyImageView.setImage(null);
+        remainingEnemies.remove(enemyIndex);
+        enemiesSpeedUp();
+    }
+
+    public static void enemiesSpeedUp() {
+        if (enemySpeed > 0) {
+            enemySpeed += 0.1;
+        }
+        else {
+            enemySpeed -= 0.1;
+        }
     }
 }
