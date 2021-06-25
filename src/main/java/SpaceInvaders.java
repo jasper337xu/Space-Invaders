@@ -9,6 +9,7 @@ public class SpaceInvaders extends Application {
     float SCREEN_HEIGHT = 600;
     AnimationTimer timer;
     static boolean stopGame = false;
+    static boolean launchNextLevel = false;
     int count = 0;
     Scene instructionScene, gameScene;
     enum SCENES {INSTRUCTION_SCENE, GAME_SCENE}
@@ -47,6 +48,13 @@ public class SpaceInvaders extends Application {
                     this.stop();
                     return;
                 }
+                else if (launchNextLevel) {
+                    System.out.println("Launching next level");
+                    this.stop();
+                    int nextLevel = GameSettings.getGameLevel();
+                    setGameSceneByLevel(stage, nextLevel);
+                    return;
+                }
                 count++;
                 if (count == 60) {
                     EnemyBullet.fireBullet();
@@ -80,6 +88,12 @@ public class SpaceInvaders extends Application {
     void setupGameScene(Stage stage) {
         //start a new game
         stopGame = false;
+        if (launchNextLevel) {
+            GameScene.launchNextLevel = true;
+            launchNextLevel = false;
+        } else {
+            GameSettings.gameLevel = 1;
+        }
         gameScene = GameScene.createGameScene();
         gameScene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.I) {

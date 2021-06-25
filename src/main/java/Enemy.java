@@ -16,13 +16,6 @@ public class Enemy {
 
     enum ENEMY_TYPE {ENEMY1, ENEMY2, ENEMY3};
 
-//    public static void init() {
-//        // init remainingEnemies
-//        for (int i = 0; i < 50; i++) {
-//            remainingEnemies.add(i);
-//        }
-//    }
-
     public static void handleEnemyAnimation(Group root) {
         boolean changeDirection = false;
         boolean stopGame = false;
@@ -65,6 +58,14 @@ public class Enemy {
         remainingEnemies.remove(enemyIndex);
         if (remainingEnemies.size() == 0) {
             //TODO: Next level or Game Success
+            int currentLevel = GameSettings.getGameLevel();
+            if (currentLevel <= 2) {
+                GameSettings.launchNextLevel();
+            }
+//            else {
+//                GameScene.stopGame(true);
+//            }
+            return;
         }
         enemiesSpeedUp();
     }

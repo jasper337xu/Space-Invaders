@@ -35,6 +35,7 @@ public class GameScene {
     static Group enemyBulletGroup = null;
     public static List<Enemy.ENEMY_TYPE> firedEnemies = new ArrayList<>();
     static Group playerBulletGroup = null;
+    static boolean launchNextLevel = false;
 
     public static Scene createGameScene() {
         root = new Group();
@@ -214,7 +215,12 @@ public class GameScene {
     }
 
     public static void addScoreLabelToGroup(Group root) {
-        Label scoreLabel = new Label("Score: 0");
+        Label scoreLabel;
+        if (launchNextLevel) {
+            scoreLabel = new Label("Score: " + Player.getScore());
+        } else {
+            scoreLabel = new Label("Score: 0");
+        }
         scoreLabel.setFont(new Font("Arial", 25));
         scoreLabel.setTextFill(Color.WHITE);
         scoreLabel.setLayoutX(50);
@@ -259,7 +265,13 @@ public class GameScene {
     }
 
     public static void startNewGame() {
-        Player.startNewGame(1);
+        if (launchNextLevel) {
+            //level will be set by GameSettings.setGameLevel(level) soon
+            Player.startNewGame(1, true);
+            launchNextLevel = false;
+        } else {
+            Player.startNewGame(1, false);
+        }
         Enemy.startNewGame(1);
     }
 }

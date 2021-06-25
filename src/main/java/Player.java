@@ -86,10 +86,13 @@ public class Player {
         return lives;
     }
 
-    public static void startNewGame(int level) {
+    public static void startNewGame(int level, boolean isNextLevel) {
         moveLeft = false;
         moveRight = false;
-        score = 0;
+        if (!isNextLevel) {
+            //accumulate score when next level is launched, set to 0 when new game is started
+            score = 0;
+        }
         lives = 3;
         playerSpeed = level + 2.0;
     }

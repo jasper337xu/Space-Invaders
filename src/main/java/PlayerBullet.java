@@ -38,9 +38,9 @@ public class PlayerBullet {
             if ((playerBullet.getLayoutX() >= enemy.getLayoutX() && playerBullet.getLayoutX() < enemy.getLayoutX() + ENEMY_WIDTH)
                     && (playerBullet.getLayoutY() <= enemy.getLayoutY() + ENEMY_HEIGHT)) {
                 //player bullet strikes an alien
-                Enemy.enemyDestroyed(enemy, i);
                 Player.updateScore(i);
                 GameScene.updateScoreLabel();
+                Enemy.enemyDestroyed(enemy, i);
                 return true;
             }
         }
